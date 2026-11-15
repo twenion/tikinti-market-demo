@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Təməl — tikinti materialları elanları</title>
+<meta name="description" content="Tikinti materialları elanları: sement, kərpic, armatur, boya, kafel, santexnika — mağazalardan və fərdi satıcılardan. Twenion konsept demosu.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23e8590c'/%3E%3Cpath d='M6 21h20v5H6zM6 14h9v5H6zM17 14h9v5h-9zM10 7h12v5H10z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top__in">
+    <a class="logo" href="#/" aria-label="Təməl — əsas səhifə">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--acc)"/><path d="M6 21h20v5H6zM6 14h9v5H6zM17 14h9v5h-9zM10 7h12v5H10z" fill="#fff"/></svg>
+      <span>təməl</span><small>tikinti elanları</small>
+    </a>
+    <nav class="top__nav">
+      <a href="#/axtar">Bütün elanlar</a>
+      <a href="#/axtar?sale=1">Endirimlər</a>
+      <a href="#/axtar?type=Mağaza">Mağazalar</a>
+    </nav>
+    <div class="top__act">
+      <a href="#/secilmis" class="ibtn" aria-label="Seçilmişlər"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><i data-badge="fav" hidden></i></a>
+      <a href="#/sebet" class="ibtn cart-btn" aria-label="Səbət"><svg class="ic" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg><i data-badge="cart" hidden></i></a>
+      <a href="#/admin" class="top__admin">Admin</a>
+      <a href="#/yeni-elan" class="btn btn--primary top__new"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Yeni elan</a>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div><a class="logo logo--sm" href="#/"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--acc)"/><path d="M6 21h20v5H6zM6 14h9v5H6zM17 14h9v5h-9zM10 7h12v5H10z" fill="#fff"/></svg><span>təməl</span></a>
+      <p>Tikinti materialları üçün elan platforması: mağazalar və fərdi satıcılar bir yerdə.</p></div>
+    <div><b>Alıcıya</b><a href="#/axtar">Elanlar</a><a href="#/axtar?sale=1">Endirimlər</a><a href="#/secilmis">Seçilmişlər</a><a href="#/sebet">Səbət</a></div>
+    <div><b>Satıcıya</b><a href="#/yeni-elan">Elan yerləşdir</a><a href="#/axtar?type=Mağaza">Mağazalar</a><a href="#/admin">Admin panel</a></div>
+  </div>
+  <p class="wrap foot__note">Bu sayt <a href="https://twenion.com/" target="_blank" rel="noopener">Twenion</a> tərəfindən hazırlanmış konsept nümunədir. Elanlar, mağazalar və qiymətlər nümunədir, real deyil. Sifariş və elanlar heç yerə göndərilmir, yalnız sizin brauzerinizdə saxlanır.</p>
+</footer>
+
+<nav class="mnav" aria-label="Menyu">
+  <a href="#/"><svg class="ic" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>Əsas</a>
+  <a href="#/axtar"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Axtar</a>
+  <a href="#/yeni-elan" class="mnav__new"><span><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Elan</a>
+  <a href="#/sebet" class="cart-btn"><svg class="ic" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>Səbət<i data-badge="cart" hidden></i></a>
+  <a href="#/admin"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/></svg>Admin</a>
+</nav>
+<div id="toasts" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
