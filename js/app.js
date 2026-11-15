@@ -393,7 +393,7 @@
     $$('[data-k]', box).forEach((el) => { vals[el.dataset.k] = el.tagName === 'SELECT' ? el.value : Math.max(0, Number(String(el.value).replace(',', '.')) || 0); });
     const r = C.fn(vals, l);
     calcQty = r.qty;
-    $('#csteps').innerHTML = r.lines.map((x) => `<li>${x}</li>`).join('');
+    $('#csteps').innerHTML = r.lines.map((x) => `<li><span>${x}</span></li>`).join('');
     $('#cqty').textContent = `${qtyFmt(r.qty)} ${l.unit}`;
     $('#csum').textContent = `${money(r.qty * l.price)} AZN`;
     if (AREA[box.dataset.calc] && vals.a) { $('#cviz').innerHTML = areaViz(box.dataset.calc, vals, l); return; }
@@ -643,6 +643,8 @@
     const [a, b] = path;
     let html;
     document.body.classList.toggle('is-admin', a === 'admin');
+    document.body.classList.toggle('on-home', !a);
+    setMega(false);
     if (!a) html = vHome();
     else if (a === 'axtar') html = vSearch();
     else if (a === 'elan') html = vListing(b);
@@ -658,6 +660,8 @@
     $$('.mnav a').forEach((x) => x.classList.toggle('on', x.getAttribute('href') === '#/' + (a || '') || (a === undefined && x.getAttribute('href') === '#/')));
     syncBadges();
     if (!a) startFeed(); else clearInterval(feedTimer);
+    const hs = $('#hsearch input'); if (hs) hs.value = a === 'axtar' ? (readQuery().q || '') : '';
+    onScroll();
     if (a === 'elan') runCalc();
     if (a === 'yeni-elan') renderPreview();
     const keep = sessionStorage.getItem('temel-keep-scroll'); sessionStorage.removeItem('temel-keep-scroll');
@@ -715,6 +719,7 @@
   });
   document.addEventListener('submit', (e) => {
     const f = e.target; e.preventDefault();
+    if (f.id === 'hsearch') { const v = f.elements.q.value.trim(); location.hash = qs(v ? { q: v } : {}); f.elements.q.blur(); return; }
     if (f.id === 'sbox') { const d = Object.fromEntries(new FormData(f)); const q = Object.assign(location.hash.startsWith('#/axtar') ? readQuery() : {}, d); location.hash = qs(q); return; }
     if (f.id === 'order') {
       const d = Object.fromEntries(new FormData(f)); let bad = false;
@@ -744,6 +749,43 @@
     }
   });
 
+  /* ---------- header: catalog menu, search, theme ---------- */
+  function renderMega() {
+    const vis = visible();
+    $('#mega').innerHTML = `<div class="mega__grid">${SEED.categories.map((c) => `<a class="mega__c" href="#/axtar?cat=${c.id}"><i>${icon(c.icon)}</i><b>${c.name}</b><em>${vis.filter((l) => l.cat === c.id).length}</em></a>`).join('')}</div>
+      <div class="mega__f"><a href="#/axtar">Bütün elanlar</a><a href="#/axtar?sale=1">Endirimlər</a><a href="#/axtar?type=Mağaza">Mağazalar</a><a href="#/axtar?type=Fərdi">Fərdi satıcılar</a></div>`;
+  }
+  function setMega(open) {
+    const m = $('#mega'), b = $('#katBtn'); if (!m) return;
+    if (open) renderMega();
+    m.hidden = !open; b.setAttribute('aria-expanded', String(open));
+  }
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#katBtn')) { setMega($('#mega').hidden); return; }
+    if (!e.target.closest('#mega') || e.target.closest('a')) setMega(false);
+    if (e.target.closest('#themeBtn')) {
+      const next = isDark() ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('temel-theme', next); } catch (err) { /* private mode */ }
+      applyTheme();
+    }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMega(false); });
+  const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+  function isDark() { const t = document.documentElement.dataset.theme; return t ? t === 'dark' : darkMQ.matches; }
+  function applyTheme() {
+    const d = isDark();
+    document.documentElement.classList.toggle('is-dark', d);
+    $('#themeBtn').setAttribute('aria-label', d ? 'Gündüz rejimi' : 'Gecə rejimi');
+  }
+  darkMQ.addEventListener('change', applyTheme);
+  function onScroll() {
+    const hero = $('.hero'); const top = $('#top');
+    top.classList.toggle('scrolled', !hero || window.scrollY > hero.offsetTop + hero.offsetHeight - 120);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   window.addEventListener('hashchange', route);
+  applyTheme();
   route();
 })();
